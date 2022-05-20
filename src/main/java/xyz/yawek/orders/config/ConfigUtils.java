@@ -18,16 +18,23 @@
 
 package xyz.yawek.orders.config;
 
-import xyz.yawek.orders.Orders;
+import net.kyori.adventure.text.Component;
+import xyz.yawek.orders.utils.ColorUtils;
 
-public class Config {
+public class ConfigUtils {
 
     private final ConfigProvider configProvider;
-    private final ConfigUtils configUtils;
 
-    public Config(Orders orders) {
-        configProvider = new ConfigProvider(orders);
-        configUtils = new ConfigUtils(configProvider);
+    public ConfigUtils(ConfigProvider configProvider) {
+        this.configProvider = configProvider;
+    }
+
+    public Component prefixedMessage(String key) {
+        String message = configProvider.getString(key);
+        if (message == null) return null;
+        return ColorUtils.decorate(Component.text(
+                configProvider.getString("messages.chat.prefix")
+                        + message));
     }
 
 }
