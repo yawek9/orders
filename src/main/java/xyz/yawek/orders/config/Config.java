@@ -18,6 +18,7 @@
 
 package xyz.yawek.orders.config;
 
+import net.kyori.adventure.text.Component;
 import xyz.yawek.orders.Orders;
 
 public class Config {
@@ -28,6 +29,10 @@ public class Config {
     public Config(Orders orders) {
         configProvider = new ConfigProvider(orders);
         configUtils = new ConfigUtils(configProvider);
+    }
+
+    public Component noPermission() {
+        return configUtils.prefixedMessage("messages.chat.no-permission");
     }
 
 }

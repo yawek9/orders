@@ -16,34 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders;
+package xyz.yawek.orders.command;
 
-import org.bukkit.plugin.java.JavaPlugin;
-import xyz.yawek.orders.command.CommandHandler;
-import xyz.yawek.orders.config.Config;
+import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
-public class Orders extends JavaPlugin {
+import java.util.List;
 
-    private static Orders plugin;
-    private Config config;
+public interface ExecutableCommand {
 
-    @Override
-    public void onEnable() {
-        plugin = this;
+    void execute(CommandSender sender, String[] args);
 
-        config = new Config(this);
-
-        CommandHandler commandHandler = new CommandHandler(this);
-        getServer().getPluginManager()
-                .registerEvents(commandHandler, this);
-    }
-
-    public static Orders getPlugin() {
-        return plugin;
-    }
-
-    public Config getPluginConfig() {
-        return config;
-    }
+    @NotNull List<String> suggest(CommandSender sender, String[] args);
 
 }

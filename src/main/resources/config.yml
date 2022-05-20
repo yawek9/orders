@@ -1,0 +1,4 @@
+messages:
+  chat:
+    prefix: "&#FF5555&lOrders &#AA0000» &#FF5555"
+    no-permission: "You don't have permission to execute this command."
