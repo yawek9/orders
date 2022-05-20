@@ -16,29 +16,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders;
+package xyz.yawek.orders.config;
 
-import org.bukkit.plugin.java.JavaPlugin;
-import xyz.yawek.orders.config.Config;
+import xyz.yawek.orders.Orders;
 
-public class Orders extends JavaPlugin {
+public class Config {
 
-    private static Orders plugin;
-    private Config config;
+    private final ConfigProvider configProvider;
 
-    @Override
-    public void onEnable() {
-        plugin = this;
-
-        config = new Config(this);
-    }
-
-    public static Orders getPlugin() {
-        return plugin;
-    }
-
-    public Config getPluginConfig() {
-        return config;
+    public Config(Orders orders) {
+        configProvider = new ConfigProvider(orders);
     }
 
 }
