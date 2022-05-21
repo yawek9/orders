@@ -35,4 +35,8 @@ public class Config {
         return configUtils.prefixedMessage("messages.chat.no-permission");
     }
 
+    public Component pluginReloaded() {
+        return configUtils.prefixedMessage("messages.chat.reloaded");
+    }
+
 }

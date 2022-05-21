@@ -27,7 +27,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-public class ConfigProvider {
+class ConfigProvider {
 
     private final Orders plugin;
     private HashMap<String, Object> config;

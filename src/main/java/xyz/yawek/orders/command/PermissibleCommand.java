@@ -54,8 +54,8 @@ public abstract class PermissibleCommand implements ExecutableCommand {
         return permission;
     }
 
-    protected abstract void handle(CommandSender source, String[] args);
+    protected abstract void handle(CommandSender sender, String[] args);
 
-    protected abstract @NotNull List<String> handleSuggestion(CommandSender source, String[] args);
+    protected abstract @NotNull List<String> handleSuggestion(CommandSender sender, String[] args);
 
 }

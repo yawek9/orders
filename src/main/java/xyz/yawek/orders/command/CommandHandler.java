@@ -26,6 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import xyz.yawek.orders.Orders;
+import xyz.yawek.orders.command.subcommand.ReloadCommand;
 
 import java.util.*;
 
@@ -36,6 +37,8 @@ public class CommandHandler implements CommandExecutor, Listener {
 
     public CommandHandler(Orders plugin) {
         this.plugin = plugin;
+
+        commandMap.put("reload", new ReloadCommand(plugin));
     }
 
     @Override

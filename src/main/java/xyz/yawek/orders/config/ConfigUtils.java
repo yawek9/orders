@@ -21,7 +21,7 @@ package xyz.yawek.orders.config;
 import net.kyori.adventure.text.Component;
 import xyz.yawek.orders.utils.ColorUtils;
 
-public class ConfigUtils {
+class ConfigUtils {
 
     private final ConfigProvider configProvider;
 

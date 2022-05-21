@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public interface ExecutableCommand {
+interface ExecutableCommand {
 
     void execute(CommandSender sender, String[] args);
 

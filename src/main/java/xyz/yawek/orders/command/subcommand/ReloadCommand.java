@@ -16,38 +16,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders;
+package xyz.yawek.orders.command.subcommand;
 
-import org.bukkit.plugin.java.JavaPlugin;
-import xyz.yawek.orders.command.CommandHandler;
-import xyz.yawek.orders.config.Config;
+import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
+import xyz.yawek.orders.Orders;
+import xyz.yawek.orders.command.PermissibleCommand;
 
-public class Orders extends JavaPlugin {
+import java.util.Collections;
+import java.util.List;
 
-    private static Orders plugin;
-    private Config config;
+public class ReloadCommand extends PermissibleCommand {
+
+    public ReloadCommand(Orders plugin) {
+        super(plugin, "orders.reload");
+    }
 
     @Override
-    public void onEnable() {
-        plugin = this;
-
-        config = new Config(this);
-
-        CommandHandler commandHandler = new CommandHandler(this);
-        getServer().getPluginManager()
-                .registerEvents(commandHandler, this);
+    protected void handle(CommandSender sender, String[] args) {
+        plugin.reload();
+        sender.sendMessage(plugin.getPluginConfig().pluginReloaded());
     }
 
-    public void reload() {
-        config = new Config(this);
-    }
-
-    public static Orders getPlugin() {
-        return plugin;
-    }
-
-    public Config getPluginConfig() {
-        return config;
+    @Override
+    protected @NotNull List<String> handleSuggestion(CommandSender sender, String[] args) {
+        return Collections.emptyList();
     }
 
 }
