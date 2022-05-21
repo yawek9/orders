@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.utils;
+package xyz.yawek.orders.util;
 
 import org.slf4j.Logger;
 import xyz.yawek.orders.Orders;

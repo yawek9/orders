@@ -19,7 +19,7 @@
 package xyz.yawek.orders.config;
 
 import net.kyori.adventure.text.Component;
-import xyz.yawek.orders.utils.ColorUtils;
+import xyz.yawek.orders.util.ColorUtils;
 
 class ConfigUtils {
 

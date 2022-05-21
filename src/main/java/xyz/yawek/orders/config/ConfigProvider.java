@@ -21,7 +21,7 @@ package xyz.yawek.orders.config;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import xyz.yawek.orders.Orders;
-import xyz.yawek.orders.utils.LogUtils;
+import xyz.yawek.orders.util.LogUtils;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
