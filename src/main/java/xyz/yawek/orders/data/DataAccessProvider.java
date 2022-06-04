@@ -16,33 +16,31 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.util;
+package xyz.yawek.orders.data;
 
-import org.slf4j.Logger;
 import xyz.yawek.orders.Orders;
 
-public class LogUtils {
+public class DataAccessProvider {
 
-    private static final Logger LOGGER = Orders.getPlugin().getSLF4JLogger();
+    private final Orders plugin;
+    private DataAccess dataAccess;
 
-    public static void info(String text, String... arguments) {
-        LOGGER.info(text, (Object[]) arguments);
+    public DataAccessProvider(Orders plugin) {
+        this.plugin = plugin;
+        load();
     }
 
-    public static void error(String text, String... arguments) {
-        LOGGER.error(text, (Object[]) arguments);
+    public void load() {
+        dataAccess = new SQLiteDataAccess(plugin);
+        dataAccess.openConnection();
     }
 
-    public static void warn(String text, String... arguments) {
-        LOGGER.warn(text, (Object[]) arguments);
+    public void unload() {
+        dataAccess.closeConnection();
     }
 
-    public static void infoDataAccess(String text, String... arguments) {
-        LOGGER.info("[Data] " + text, (Object[]) arguments);
-    }
-
-    public static void errorDataAccess(String text, String... arguments) {
-        LOGGER.error("[Data] " + text, (Object[]) arguments);
+    public DataAccess getDataAccess() {
+        return dataAccess;
     }
 
 }

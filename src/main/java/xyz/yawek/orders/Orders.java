@@ -21,25 +21,37 @@ package xyz.yawek.orders;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.yawek.orders.command.CommandHandler;
 import xyz.yawek.orders.config.Config;
+import xyz.yawek.orders.data.DataProvider;
 
 public class Orders extends JavaPlugin {
 
     private static Orders plugin;
     private Config config;
+    private DataProvider dataProvider;
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onEnable() {
         plugin = this;
 
         config = new Config(this);
+        dataProvider = new DataProvider(this);
+        dataProvider.setup();
 
         CommandHandler commandHandler = new CommandHandler(this);
         getServer().getPluginManager()
                 .registerEvents(commandHandler, this);
+        getCommand("orders").setExecutor(commandHandler);
+    }
+
+    @Override
+    public void onDisable() {
+        dataProvider.shutdown();
     }
 
     public void reload() {
         config = new Config(this);
+        dataProvider.reload();
     }
 
     public static Orders getPlugin() {
@@ -48,6 +60,10 @@ public class Orders extends JavaPlugin {
 
     public Config getPluginConfig() {
         return config;
+    }
+
+    public DataProvider getDataProvider() {
+        return dataProvider;
     }
 
 }
