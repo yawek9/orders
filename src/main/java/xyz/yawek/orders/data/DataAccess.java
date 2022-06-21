@@ -23,6 +23,7 @@ import xyz.yawek.orders.order.OrderStatus;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 interface DataAccess {
 
@@ -32,8 +33,16 @@ interface DataAccess {
 
     Optional<Order> getOrderById(long id);
 
-    void saveOrder(Order order);
+    void addOrder(Order order);
+
+    void updateOrder(Order order);
+
+    void deleteOrder(Order order);
 
     List<Order> getOrdersByStatus(OrderStatus status);
+
+    List<Order> getOrdersByStatusAndCreator(OrderStatus status, UUID creatorUUID);
+
+    int getOrderCount(String UUIDString);
 
 }

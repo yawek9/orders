@@ -18,25 +18,45 @@
 
 package xyz.yawek.orders;
 
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.yawek.orders.command.CommandHandler;
 import xyz.yawek.orders.config.Config;
 import xyz.yawek.orders.data.DataProvider;
+import xyz.yawek.orders.handler.ActionHandler;
+import xyz.yawek.orders.manager.*;
 
 public class Orders extends JavaPlugin {
 
     private static Orders plugin;
+    private Economy economy;
+
     private Config config;
     private DataProvider dataProvider;
+    private UserManager userManager;
+    private OrderManager orderManager;
+    private OrdersGUIManager ordersGUIManager;
+    private OwnOrdersGUIManager ownOrdersGUIManager;
+    private CompletionGUIManager completionGUIManager;
+    private ActionHandler actionHandler;
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onEnable() {
         plugin = this;
 
+        setupEconomy();
         config = new Config(this);
         dataProvider = new DataProvider(this);
         dataProvider.setup();
+        userManager = new UserManager(dataProvider);
+        orderManager = new OrderManager(this);
+        ordersGUIManager = new OrdersGUIManager(this);
+        ownOrdersGUIManager = new OwnOrdersGUIManager(this);
+        completionGUIManager = new CompletionGUIManager(this);
+        actionHandler = new ActionHandler(this);
 
         CommandHandler commandHandler = new CommandHandler(this);
         getServer().getPluginManager()
@@ -54,8 +74,23 @@ public class Orders extends JavaPlugin {
         dataProvider.reload();
     }
 
+    private void setupEconomy() {
+        if (Bukkit.getPluginManager().getPlugin("Vault") == null) return;
+        RegisteredServiceProvider<Economy> serviceProvider = getServer()
+                .getServicesManager()
+                .getRegistration(Economy.class);
+        if (serviceProvider == null) {
+            return;
+        }
+        economy = serviceProvider.getProvider();
+    }
+
     public static Orders getPlugin() {
         return plugin;
+    }
+
+    public Economy getEconomy() {
+        return economy;
     }
 
     public Config getPluginConfig() {
@@ -64,6 +99,30 @@ public class Orders extends JavaPlugin {
 
     public DataProvider getDataProvider() {
         return dataProvider;
+    }
+
+    public UserManager getUserManager() {
+        return userManager;
+    }
+
+    public OrderManager getOrderManager() {
+        return orderManager;
+    }
+
+    public OrdersGUIManager getOrdersGUIManager() {
+        return ordersGUIManager;
+    }
+
+    public OwnOrdersGUIManager getOwnOrdersGUIManager() {
+        return ownOrdersGUIManager;
+    }
+
+    public CompletionGUIManager getCompletionGUIManager() {
+        return completionGUIManager;
+    }
+
+    public ActionHandler getActionHandler() {
+        return actionHandler;
     }
 
 }

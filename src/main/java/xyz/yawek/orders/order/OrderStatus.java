@@ -21,14 +21,16 @@ package xyz.yawek.orders.order;
 public enum OrderStatus {
 
     ACTIVE(0),
-    EXPIRED(1),
-    CANCELLED(2),
-    COMPLETED(3);
+    COMPLETED(1);
 
     public final int value;
 
     OrderStatus(int value) {
         this.value = value;
+    }
+
+    public static OrderStatus next(OrderStatus orderStatus) {
+        return orderStatus == ACTIVE ? COMPLETED : ACTIVE;
     }
 
 }

@@ -18,6 +18,7 @@
 
 package xyz.yawek.orders.data;
 
+import org.bukkit.entity.Player;
 import xyz.yawek.orders.Orders;
 import xyz.yawek.orders.order.Order;
 import xyz.yawek.orders.order.OrderStatus;
@@ -47,15 +48,41 @@ public class DataProvider {
     }
 
     public Optional<Order> getOrderById(long id) {
-        return dataAccessProvider.getDataAccess().getOrderById(id);
+        return dataAccessProvider
+                .getDataAccess()
+                .getOrderById(id);
     }
 
     public void saveOrder(Order order) {
-        dataAccessProvider.getDataAccess().saveOrder(order);
+        DataAccess data = dataAccessProvider.getDataAccess();
+        if (order.getId().isEmpty()) {
+            data.addOrder(order);
+        } else {
+            data.updateOrder(order);
+        }
+    }
+
+    public void removeOrder(Order order) {
+        dataAccessProvider.getDataAccess().deleteOrder(order);
     }
 
     public List<Order> getOrdersByStatus(OrderStatus status) {
-        return dataAccessProvider.getDataAccess().getOrdersByStatus(status);
+        return dataAccessProvider
+                .getDataAccess()
+                .getOrdersByStatus(status);
+    }
+
+    public List<Order> getOrdersByStatusAndCreator(
+            OrderStatus status, Player creator) {
+        return dataAccessProvider
+                .getDataAccess()
+                .getOrdersByStatusAndCreator(status, creator.getUniqueId());
+    }
+
+    public int getOrderCount(String UUIDString) {
+        return dataAccessProvider
+                .getDataAccess()
+                .getOrderCount(UUIDString);
     }
 
 }

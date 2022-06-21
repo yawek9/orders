@@ -1,5 +1,108 @@
+settings:
+  expiration-time: 259200
+  min-payment: 0.01
+  max-payment: 100000000.0
+  blacklisted-items:
+    - "BARRIER"
+    - "DRAGON_HEAD"
+    - "DRAGON_EGG"
+    - "SPAWNER"
+    - "COMMAND_BLOCK"
+orders-gui:
+  title: "&#FF5555Orders"
+  own-button:
+    item: "DIAMOND"
+    display-name: "&#FF5555Your orders"
+    lore:
+      - "&#FFFFFFClick to view your own orders."
+  sorting-button:
+    item: "EMERALD"
+    display-name: "&#FF5555Sorting"
+    order: "&#FF5555Order: &#FFFFFF{}"
+    newest-to-oldest: "from newest to oldest"
+    oldest-to-newest: "from oldest to newest"
+    lowest-to-highest: "from lowest to highest payment"
+    highest-to-lowest: "from highest to lowest payment"
+  info-button:
+    item: "BOOK"
+    display-name: "&#FF5555How to place own order?"
+    lore:
+      - "&#FFFFFFTo place own order, type the command"
+      - "&#FF5555/orders add (item name) (amount) (payment) &#FFFFFFor"
+      - "&#FF5555/orders add hand (amount) (payment)&#FFFFFF, holding the item."
+  previous-page-button:
+    item: "PAPER"
+    display-name: "&#FF5555Previous page"
+    lore:
+      - "&#FFFFFFClick to go to the previous page."
+  next-page-button:
+    item: "PAPER"
+    display-name: "&#FF5555Next page"
+    lore:
+      - "&#FFFFFFClick to go to the next page."
+  order-item:
+    amount: "&#FF5555Amount: &#FFFFFF{}"
+    payment: "&#FF5555Payment: &#FFFFFF{}"
+    creator: "&#FF5555Creator: &#FFFFFF{}"
+    contractor: "&#FF5555Contractor: &#FFFFFF{}"
+    expiration: "&#FF5555Expires in: &#FFFFFF{}"
+    top-break:
+      - "&#FF5555--------------------------"
+      - ""
+    bottom-break:
+      - ""
+      - "&#FF5555--------------------------"
+    days: "days"
+    hours: "hours"
+    minutes: "minutes"
+    seconds: "seconds"
+    main-menu-lore:
+      - "&#FFFFFFClick to complete the order and receive payment."
+    own-menu-active-lore:
+      - "&#FFFFFFClick while holding SHIFT to cancel your order."
+    own-menu-completed-lore:
+      - "&#FFFFFFClick while holding SHIFT to receive items."
+  own-gui-title: "&#FF5555Your orders"
+  return-button:
+    item: "BARRIER"
+    display-name: "&#FF5555Return to the global list"
+    lore:
+      - "&#FFFFFFClick to go to the global orders list."
+  status-button:
+    item: "IRON_INGOT"
+    display-name: "&#FF5555Orders status"
+    status: "&#FF5555Status: &#FFFFFF{}"
+    active: "active"
+    expired: "expired"
+    cancelled: "cancelled"
+    completed: "completed"
+  empty-item: "GRAY_STAINED_GLASS_PANE"
+  completion-gui-title: "&#FF5555Complete an order"
+  complete-button:
+    item: "LIME_DYE"
+    display-name: "&#FF5555Accept"
+    lore:
+      - "&#FFFFFFClick to give the items and"
+      - "&#FFFFFFget money into your account."
 messages:
   chat:
     prefix: "&#FF5555&lOrders &#AA0000» &#FF5555"
+    not-from-console: "You can't execute this command from console."
     no-permission: "You don't have permission to execute this command."
     reloaded: "Plugin has been reloaded."
+    orders-limit-reached: "You can't create more orders. You've reached your limit which is equal to {}."
+    no-item-in-hand: "You don't have any item in your hand."
+    amount-not-correct: "The amount you've entered is wrong. It must be a number that is bigger than 0 and smaller than {}."
+    payment-not-correct: "The payment you've entered is wrong. It must be a number that is bigger than {} and smaller than {}."
+    not-enough-money: "You don't have enough money to pay for this order."
+    blacklisted-item: "Item you are trying to add is restricted and cannot be added as an order."
+    wrong-item-name: "Item name you've cannot be adapted to the any item. Try again providing correct name."
+    order-added: "Order of {} has been successfully listed."
+    order-cancelled: "Order of {} has been cancelled."
+    own-order-completion: "This order was created by you. You can't complete your own orders."
+    wrong-items-put: "Items you've put do not match the items required in the order."
+    order-already-completed: "This order has already been completed. Someone was faster than you."
+    order-completed: "You've completed player's {} order of {}. {} has been deposited into your account."
+    items-received: "You've received {} that complete your order."
+    wrong-usage:
+      add: "You used the command in the wrong way. Correct usage is: &#FFFFFF/orders add (item name) (amount) (payment) &#FF5555or &#FFFFFF/orders add hand (amount) (payment)&#FF5555, holding the item."

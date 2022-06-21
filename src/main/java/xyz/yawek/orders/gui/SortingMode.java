@@ -16,31 +16,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.command.subcommand;
+package xyz.yawek.orders.gui;
 
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
-import xyz.yawek.orders.Orders;
-import xyz.yawek.orders.command.PermissibleCommand;
+public enum SortingMode {
 
-import java.util.Collections;
-import java.util.List;
+    NEWEST_TO_OLDEST(0),
+    OLDEST_TO_NEWEST(1),
+    LOWEST_TO_HIGHEST_PAYMENT(2),
+    HIGHEST_TO_LOWEST_PAYMENT(3);
 
-public class ReloadCommand extends PermissibleCommand {
+    public final int value;
 
-    public ReloadCommand(Orders plugin) {
-        super(plugin, "orders.reload");
+    SortingMode(int value) {
+        this.value = value;
     }
 
-    @Override
-    protected void handle(CommandSender sender, String[] args) {
-        plugin.reload();
-        sender.sendMessage(plugin.getPluginConfig().pluginReloaded());
-    }
-
-    @Override
-    protected @NotNull List<String> getSuggestions(CommandSender sender, String[] args) {
-        return Collections.emptyList();
+    public static SortingMode next(SortingMode sortingMode) {
+        return switch (sortingMode.value) {
+            case 0 -> OLDEST_TO_NEWEST;
+            case 1 -> LOWEST_TO_HIGHEST_PAYMENT;
+            case 2 -> HIGHEST_TO_LOWEST_PAYMENT;
+            default -> NEWEST_TO_OLDEST;
+        };
     }
 
 }

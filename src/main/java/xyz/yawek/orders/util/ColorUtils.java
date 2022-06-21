@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 public class ColorUtils {
 
@@ -96,6 +97,10 @@ public class ColorUtils {
             }
         }
         return makeUrlsClickable(outputBuilder.build());
+    }
+
+    public static Component decorate(String input) {
+        return decorate(Component.text(input));
     }
 
     private static Component makeGradient(Color firstColor, Color secondColor,
@@ -178,9 +183,9 @@ public class ColorUtils {
 
     private static double[] interpolateColor(double from, double to, int max) {
         final double[] res = new double[max];
-        for (int i = 0; i < max; i++) {
+        IntStream.rangeClosed(0, max).forEach(i -> {
             res[i] = from + i * ((to - from) / (max - 1));
-        }
+        });
         return res;
     }
 

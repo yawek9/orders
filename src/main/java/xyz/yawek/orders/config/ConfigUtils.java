@@ -21,6 +21,11 @@ package xyz.yawek.orders.config;
 import net.kyori.adventure.text.Component;
 import xyz.yawek.orders.util.ColorUtils;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.stream.Collectors;
+
 class ConfigUtils {
 
     private final ConfigProvider configProvider;
@@ -29,12 +34,46 @@ class ConfigUtils {
         this.configProvider = configProvider;
     }
 
-    public Component prefixedMessage(String key) {
+    public Component prefixedComponent(String key, String... arguments) {
         String message = configProvider.getString(key);
         if (message == null) return null;
+        for (String arg : arguments) {
+            message = message.replaceFirst("\\{}", Matcher.quoteReplacement(arg));
+        }
         return ColorUtils.decorate(Component.text(
                 configProvider.getString("messages.chat.prefix")
                         + message));
+    }
+
+    public Component component(String key) {
+        String message = configProvider.getString(key);
+        if (message == null) return null;
+        return ColorUtils.decorate(Component.text(message));
+    }
+
+    public List<Component> componentList(String key) {
+        return configProvider.getStringList(key)
+                .stream()
+                .map(s -> ColorUtils.decorate(Component.text(s)))
+                .collect(Collectors.toList());
+    }
+
+    public String formatTimeTo(long timestamp) {
+        long millisTo = timestamp - System.currentTimeMillis();
+
+        long days = TimeUnit.MILLISECONDS.toDays(millisTo);
+        long daysInMillis = TimeUnit.DAYS.toMillis(days);
+        long hours = TimeUnit.MILLISECONDS.toHours(millisTo - daysInMillis);
+        long hoursInMillis = TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(
+                millisTo - daysInMillis - hoursInMillis);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(
+                millisTo - daysInMillis - hoursInMillis
+                        - TimeUnit.MINUTES.toMillis(minutes));
+        return days + " " + configProvider.getString("orders-gui.order-item.days") + " "
+                + hours + " " + configProvider.getString("orders-gui.order-item.hours") + " "
+                + minutes + " " + configProvider.getString("orders-gui.order-item.minutes") + " "
+                + seconds + " " + configProvider.getString("orders-gui.order-item.seconds") + " ";
     }
 
 }

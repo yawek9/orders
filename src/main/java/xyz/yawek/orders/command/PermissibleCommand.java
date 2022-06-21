@@ -47,7 +47,7 @@ public abstract class PermissibleCommand implements ExecutableCommand {
     @Override
     public @NotNull List<String> suggest(CommandSender sender, String[] args) {
         if (!sender.hasPermission(permission)) return Collections.emptyList();
-        return handleSuggestion(sender, args);
+        return getSuggestions(sender, args);
     }
 
     public String getPermission() {
@@ -56,6 +56,6 @@ public abstract class PermissibleCommand implements ExecutableCommand {
 
     protected abstract void handle(CommandSender sender, String[] args);
 
-    protected abstract @NotNull List<String> handleSuggestion(CommandSender sender, String[] args);
+    protected abstract @NotNull List<String> getSuggestions(CommandSender sender, String[] args);
 
 }

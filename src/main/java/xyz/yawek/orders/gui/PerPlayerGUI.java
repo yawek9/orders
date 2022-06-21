@@ -16,31 +16,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.command.subcommand;
+package xyz.yawek.orders.gui;
 
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
-import xyz.yawek.orders.Orders;
-import xyz.yawek.orders.command.PermissibleCommand;
+import org.bukkit.entity.Player;
 
-import java.util.Collections;
-import java.util.List;
+abstract class PerPlayerGUI extends PageableGUI {
 
-public class ReloadCommand extends PermissibleCommand {
+    private final Player player;
+    private int openedPage;
 
-    public ReloadCommand(Orders plugin) {
-        super(plugin, "orders.reload");
+    public PerPlayerGUI(Player player) {
+        this.player = player;
     }
 
-    @Override
-    protected void handle(CommandSender sender, String[] args) {
-        plugin.reload();
-        sender.sendMessage(plugin.getPluginConfig().pluginReloaded());
+    public Player getPlayer() {
+        return player;
     }
 
-    @Override
-    protected @NotNull List<String> getSuggestions(CommandSender sender, String[] args) {
-        return Collections.emptyList();
+    public int getOpenedPage() {
+        return openedPage;
+    }
+
+    public void open(int index) {
+        openedPage = index;
+        this.getInventoryAtIndex(index)
+                .ifPresent(player::openInventory);
+    }
+
+    public void setClosed() {
+        openedPage = -1;
+    }
+
+    public void loadGUIIfOpened() {
+        if (getOpenedPage() == -1) return;
+        this.loadGUI();
     }
 
 }

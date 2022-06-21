@@ -27,7 +27,6 @@ public class DataAccessProvider {
 
     public DataAccessProvider(Orders plugin) {
         this.plugin = plugin;
-        load();
     }
 
     public void load() {

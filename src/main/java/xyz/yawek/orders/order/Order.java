@@ -25,28 +25,35 @@ import java.util.UUID;
 
 public class Order {
 
-    private final long id;
+    private long id;
     private final ItemStack itemStack;
     private final int amount;
     private final double payment;
+    private final long creationTimestamp;
     private final long expirationTimestamp;
-    private final UUID creator;
-    private final OrderStatus status;
-    private UUID contractor;
+    private final UUID creatorUUID;
+    private UUID contractorUUID;
+    private OrderStatus status;
 
-    public Order(long id, ItemStack itemStack, int amount, double payment,
-                 long expirationTimestamp, UUID creator, OrderStatus status) {
-        this.id = id;
+    public Order(ItemStack itemStack, int amount, double payment,
+                 long creationTimestamp, long expirationTimestamp,
+                 UUID creatorUUID, OrderStatus status) {
         this.itemStack = itemStack;
         this.amount = amount;
         this.payment = payment;
+        this.creationTimestamp = creationTimestamp;
         this.expirationTimestamp = expirationTimestamp;
-        this.creator = creator;
+        this.creatorUUID = creatorUUID;
         this.status = status;
     }
 
-    public long getId() {
-        return id;
+    public Optional<Long> getId() {
+        if (id == 0) return Optional.empty();
+        return Optional.of(id);
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public ItemStack getItemStack() {
@@ -65,21 +72,29 @@ public class Order {
         return expirationTimestamp;
     }
 
-    public UUID getCreator() {
-        return creator;
+    public long getCreationTimestamp() {
+        return creationTimestamp;
+    }
+
+    public UUID getCreatorUUID() {
+        return creatorUUID;
+    }
+
+    public Optional<UUID> getContractorUUID() {
+        if (contractorUUID == null) return Optional.empty();
+        return Optional.of(contractorUUID);
+    }
+
+    public void setContractorUUID(UUID contractorUUID) {
+        this.contractorUUID = contractorUUID;
     }
 
     public OrderStatus getStatus() {
         return status;
     }
 
-    public Optional<UUID> getContractor() {
-        if (contractor == null) return Optional.empty();
-        return Optional.of(contractor);
-    }
-
-    public void setContractor(UUID contractor) {
-        this.contractor = contractor;
+    public void setStatus(OrderStatus status) {
+        this.status = status;
     }
 
 }

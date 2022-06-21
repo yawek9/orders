@@ -30,7 +30,7 @@ import java.util.*;
 class ConfigProvider {
 
     private final Orders plugin;
-    private HashMap<String, Object> config;
+    private Map<String, Object> config;
 
     public ConfigProvider(Orders plugin) {
         this.plugin = plugin;
@@ -109,6 +109,20 @@ class ConfigProvider {
     protected int getInt(String key) {
         Object value = getValue(key);
         return value != null ? (int) value : -1;
+    }
+
+    protected long getLong(String key) {
+        Object value = getValue(key);
+        if (value == null) return -1L;
+        if (value instanceof Integer i) return i.longValue();
+        return (long) value;
+    }
+
+    protected double getDouble(String key) {
+        Object value = getValue(key);
+        if (value == null) return -1D;
+        if (value instanceof Integer i) return i.doubleValue();
+        return (double) value;
     }
 
     protected boolean getBoolean(String key) {

@@ -1,0 +1,9 @@
+name: Orders
+version: 1.0
+api-version: 1.13
+depend: [Vault]
+main: xyz.yawek.orders.Orders
+author: yawek9
+commands:
+  orders:
+    permission: orders.orders

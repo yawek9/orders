@@ -16,31 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.command.subcommand;
+package xyz.yawek.orders.manager;
 
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.entity.Player;
 import xyz.yawek.orders.Orders;
-import xyz.yawek.orders.command.PermissibleCommand;
+import xyz.yawek.orders.gui.OrdersGUI;
 
-import java.util.Collections;
-import java.util.List;
+public class OrdersGUIManager extends ClickableGUIManager {
 
-public class ReloadCommand extends PermissibleCommand {
-
-    public ReloadCommand(Orders plugin) {
-        super(plugin, "orders.reload");
+    public OrdersGUIManager(Orders plugin) {
+        super(plugin, true);
     }
 
-    @Override
-    protected void handle(CommandSender sender, String[] args) {
-        plugin.reload();
-        sender.sendMessage(plugin.getPluginConfig().pluginReloaded());
-    }
-
-    @Override
-    protected @NotNull List<String> getSuggestions(CommandSender sender, String[] args) {
-        return Collections.emptyList();
+    public void openGUI(Player player) {
+        this.findGUIIfMatches(player).ifPresentOrElse(
+                clickableGUI -> clickableGUI.open(0), () -> {
+                    OrdersGUI ordersGUI = new OrdersGUI(plugin, player);
+                    this.add(ordersGUI);
+                    ordersGUI.open(0);
+                });
     }
 
 }

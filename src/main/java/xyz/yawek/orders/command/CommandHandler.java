@@ -22,10 +22,12 @@ import com.destroystokyo.paper.event.server.AsyncTabCompleteEvent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import xyz.yawek.orders.Orders;
+import xyz.yawek.orders.command.subcommand.AddCommand;
 import xyz.yawek.orders.command.subcommand.ReloadCommand;
 
 import java.util.*;
@@ -39,6 +41,7 @@ public class CommandHandler implements CommandExecutor, Listener {
         this.plugin = plugin;
 
         commandMap.put("reload", new ReloadCommand(plugin));
+        commandMap.put("add", new AddCommand(plugin));
     }
 
     @Override
@@ -46,17 +49,22 @@ public class CommandHandler implements CommandExecutor, Listener {
                              @NotNull Command command,
                              @NotNull String s,
                              @NotNull String[] args) {
+        if (!s.equalsIgnoreCase("orders")) return false;
         if (!sender.hasPermission("orders.orders")) {
             sender.sendMessage(plugin.getPluginConfig().noPermission());
-            return false;
+            return true;
         }
         if (args.length == 0 || !commandMap.containsKey(args[0])) {
-            // base command usage
-            return false;
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage(plugin.getPluginConfig().notFromConsole());
+                return true;
+            }
+            plugin.getOrdersGUIManager().openGUI(player);
+            return true;
         }
         commandMap.get(args[0]).execute(sender,
                 Arrays.copyOfRange(args, 1, args.length));
-        return false;
+        return true;
     }
 
     @SuppressWarnings("unused")
@@ -64,6 +72,8 @@ public class CommandHandler implements CommandExecutor, Listener {
     public void onTabComplete(AsyncTabCompleteEvent e) {
         CommandSender sender = e.getSender();
         String[] args = e.getBuffer().split(" ");
+
+        if (!args[0].equalsIgnoreCase("orders")) return;
         if (args.length == 1) {
             List<String> firstArguments = new ArrayList<>();
             for (String commandString : commandMap.keySet()) {

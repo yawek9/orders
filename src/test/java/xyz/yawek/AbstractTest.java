@@ -18,10 +18,10 @@
 
 package xyz.yawek;
 
+import net.milkbowl.vault.economy.Economy;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
-import org.mockito.Mockito;
 import xyz.yawek.orders.Orders;
 
 import java.io.File;
@@ -30,6 +30,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.logging.Logger;
+
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AbstractTest {
@@ -40,9 +44,15 @@ public class AbstractTest {
 
     @BeforeAll
     void setup() {
-        this.plugin = Mockito.mock(Orders.class);
-        Mockito.when(plugin.getDataFolder())
+        this.plugin = mock(Orders.class);
+        when(plugin.getDataFolder())
                 .thenReturn(Path.of("test/").toFile());
+
+        Economy economy = mock(Economy.class);
+        when(plugin.getEconomy())
+                .thenReturn(economy);
+        when(economy.format(anyDouble()))
+                .thenReturn("$");
     }
 
     @AfterAll

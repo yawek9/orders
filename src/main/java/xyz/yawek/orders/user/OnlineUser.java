@@ -16,31 +16,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.command.subcommand;
+package xyz.yawek.orders.user;
 
-import org.bukkit.command.CommandSender;
-import org.jetbrains.annotations.NotNull;
-import xyz.yawek.orders.Orders;
-import xyz.yawek.orders.command.PermissibleCommand;
+import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
-import java.util.Collections;
-import java.util.List;
+public class OnlineUser {
 
-public class ReloadCommand extends PermissibleCommand {
+    private final Player player;
+    private int ordersCount = 0;
 
-    public ReloadCommand(Orders plugin) {
-        super(plugin, "orders.reload");
+    public OnlineUser(Player player, int ordersCount) {
+        this.player = player;
+        this.ordersCount = ordersCount;
     }
 
-    @Override
-    protected void handle(CommandSender sender, String[] args) {
-        plugin.reload();
-        sender.sendMessage(plugin.getPluginConfig().pluginReloaded());
+    public boolean canCreateOrder() {
+        return ordersCount < getOrdersLimit();
     }
 
-    @Override
-    protected @NotNull List<String> getSuggestions(CommandSender sender, String[] args) {
-        return Collections.emptyList();
+    public int getOrdersLimit() {
+        for (PermissionAttachmentInfo p : player.getEffectivePermissions()) {
+            if (!p.getPermission().startsWith("orders.limit")) continue;
+            try {
+                return Integer.parseInt(p.getPermission().split("\\.")[2]);
+            } catch (Exception ignored) { }
+        }
+        return 0;
     }
 
 }
