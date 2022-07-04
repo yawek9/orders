@@ -16,13 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.manager;
+package xyz.yawek.orders.gui.completion;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import xyz.yawek.orders.Orders;
-import xyz.yawek.orders.gui.CompletionGUI;
+import xyz.yawek.orders.gui.ClickableGUIManager;
 import xyz.yawek.orders.order.Order;
 import xyz.yawek.orders.util.InventoryUtils;
 

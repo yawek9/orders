@@ -16,11 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.manager;
+package xyz.yawek.orders.gui.own;
 
 import org.bukkit.entity.Player;
 import xyz.yawek.orders.Orders;
-import xyz.yawek.orders.gui.OwnOrdersGUI;
+import xyz.yawek.orders.gui.ClickableGUIManager;
 
 public class OwnOrdersGUIManager extends ClickableGUIManager {
 

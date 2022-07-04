@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.gui;
+package xyz.yawek.orders.gui.completion;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -24,6 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import xyz.yawek.orders.Orders;
+import xyz.yawek.orders.gui.ClickableGUI;
 import xyz.yawek.orders.order.Order;
 import xyz.yawek.orders.util.InventoryUtils;
 import xyz.yawek.orders.util.ItemUtils;

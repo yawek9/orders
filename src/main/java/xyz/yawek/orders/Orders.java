@@ -25,6 +25,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xyz.yawek.orders.command.CommandHandler;
 import xyz.yawek.orders.config.Config;
 import xyz.yawek.orders.data.DataProvider;
+import xyz.yawek.orders.gui.completion.CompletionGUIManager;
+import xyz.yawek.orders.gui.orders.OrdersGUIManager;
+import xyz.yawek.orders.gui.own.OwnOrdersGUIManager;
 import xyz.yawek.orders.handler.ActionHandler;
 import xyz.yawek.orders.manager.*;
 

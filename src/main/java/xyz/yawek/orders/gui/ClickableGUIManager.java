@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package xyz.yawek.orders.manager;
+package xyz.yawek.orders.gui;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -30,14 +30,13 @@ import org.bukkit.plugin.EventExecutor;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 import xyz.yawek.orders.Orders;
-import xyz.yawek.orders.gui.ClickableGUI;
 import xyz.yawek.orders.util.TaskUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-abstract class ClickableGUIManager implements Listener, EventExecutor {
+public abstract class ClickableGUIManager implements Listener, EventExecutor {
 
     protected final Orders plugin;
     private final List<ClickableGUI> guis = new ArrayList<>();
@@ -94,8 +93,7 @@ abstract class ClickableGUIManager implements Listener, EventExecutor {
     }
 
     protected void onInventoryClose(InventoryCloseEvent e) {
-        findGUIIfContains(e.getInventory())
-                .ifPresent(clickableGUI -> clickableGUI.setClosed());
+        findGUIIfContains(e.getInventory()).ifPresent(PerPlayerGUI::setClosed);
     }
 
     protected void onPlayerQuit(PlayerQuitEvent e) {
