@@ -21,6 +21,7 @@ package xyz.yawek.orders.command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import xyz.yawek.orders.Orders;
+import xyz.yawek.orders.util.TaskUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,10 +30,12 @@ public abstract class PermissibleCommand implements ExecutableCommand {
 
     protected final Orders plugin;
     private final String permission;
+    private final boolean async;
 
-    public PermissibleCommand(Orders plugin, String permission) {
+    public PermissibleCommand(Orders plugin, String permission, boolean async) {
         this.plugin = plugin;
         this.permission = permission;
+        this.async = async;
     }
 
     @Override
@@ -41,7 +44,11 @@ public abstract class PermissibleCommand implements ExecutableCommand {
             sender.sendMessage(plugin.getPluginConfig().noPermission());
             return;
         }
-        handle(sender, args);
+        if (async) {
+            TaskUtil.async(() -> handle(sender, args));
+        } else {
+            handle(sender, args);
+        }
     }
 
     @Override

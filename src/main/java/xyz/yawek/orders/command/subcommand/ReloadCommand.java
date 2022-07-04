@@ -29,7 +29,7 @@ import java.util.List;
 public class ReloadCommand extends PermissibleCommand {
 
     public ReloadCommand(Orders plugin) {
-        super(plugin, "orders.reload");
+        super(plugin, "orders.reload", true);
     }
 
     @Override

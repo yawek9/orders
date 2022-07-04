@@ -36,7 +36,7 @@ import java.util.List;
 public class AddCommand extends PermissibleCommand {
 
     public AddCommand(Orders plugin) {
-        super(plugin, "orders.add");
+        super(plugin, "orders.add", true);
     }
 
     @Override
