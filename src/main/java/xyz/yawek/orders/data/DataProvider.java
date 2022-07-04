@@ -24,7 +24,6 @@ import xyz.yawek.orders.order.Order;
 import xyz.yawek.orders.order.OrderStatus;
 
 import java.util.List;
-import java.util.Optional;
 
 public class DataProvider {
 
@@ -45,12 +44,6 @@ public class DataProvider {
     public void reload() {
         shutdown();
         setup();
-    }
-
-    public Optional<Order> getOrderById(long id) {
-        return dataAccessProvider
-                .getDataAccess()
-                .getOrderById(id);
     }
 
     public void saveOrder(Order order) {

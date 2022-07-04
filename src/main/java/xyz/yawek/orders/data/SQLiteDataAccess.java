@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 class SQLiteDataAccess implements DataAccess {
@@ -94,37 +93,6 @@ class SQLiteDataAccess implements DataAccess {
                     "with SQLite database.");
             e.printStackTrace();
         }
-    }
-
-    @Override
-    public Optional<Order> getOrderById(long id) {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "SELECT * FROM orders WHERE id = ?")) {
-            preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                Order order = new Order(
-                        ItemUtils.fromBase64(resultSet.getString(2)),
-                        resultSet.getInt(3),
-                        resultSet.getDouble(4),
-                        resultSet.getLong(5),
-                        resultSet.getLong(6),
-                        UUID.fromString(resultSet.getString(7)),
-                        OrderStatus.values()[resultSet.getInt(9)]);
-                order.setId(id);
-
-                String contractorUUID = resultSet.getString(8);
-                if (contractorUUID != null)
-                    order.setContractorUUID(UUID.fromString(contractorUUID));
-
-                return Optional.of(order);
-            }
-        } catch (SQLException e) {
-            LogUtils.errorDataAccess("Unable to get order by id {}.",
-                    String.valueOf(id));
-            e.printStackTrace();
-        }
-        return Optional.empty();
     }
 
     @Override

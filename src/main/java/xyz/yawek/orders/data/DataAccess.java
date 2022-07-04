@@ -22,7 +22,6 @@ import xyz.yawek.orders.order.Order;
 import xyz.yawek.orders.order.OrderStatus;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 interface DataAccess {
@@ -30,8 +29,6 @@ interface DataAccess {
     void openConnection();
 
     void closeConnection();
-
-    Optional<Order> getOrderById(long id);
 
     void addOrder(Order order);
 
