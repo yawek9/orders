@@ -71,30 +71,28 @@ public class CommandHandler implements CommandExecutor, Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void onTabComplete(AsyncTabCompleteEvent e) {
-        TaskUtil.async(() -> {
-            CommandSender sender = e.getSender();
-            String[] args = e.getBuffer().split(" ");
+        CommandSender sender = e.getSender();
+        String[] args = e.getBuffer().split(" ");
 
-            if (!args[0].equalsIgnoreCase("orders")) return;
-            if (args.length == 1) {
-                List<String> firstArguments = new ArrayList<>();
-                for (String commandString : commandMap.keySet()) {
-                    if (commandMap.get(commandString)
-                            instanceof PermissibleCommand permissibleCommand) {
-                        if (sender.hasPermission(permissibleCommand.getPermission()))
-                            firstArguments.add(commandString);
-                    } else {
+        if (!args[0].equalsIgnoreCase("orders")) return;
+        if (args.length == 1) {
+            List<String> firstArguments = new ArrayList<>();
+            for (String commandString : commandMap.keySet()) {
+                if (commandMap.get(commandString)
+                        instanceof PermissibleCommand permissibleCommand) {
+                    if (sender.hasPermission(permissibleCommand.getPermission()))
                         firstArguments.add(commandString);
-                    }
+                } else {
+                    firstArguments.add(commandString);
                 }
-                e.setCompletions(firstArguments);
-            } else if (args.length > 1 && commandMap.containsKey(args[0])) {
-                e.setCompletions(commandMap.get(args[0]).suggest(sender,
-                        Arrays.copyOfRange(args, 1, args.length)));
-            } else {
-                e.setCompletions(Collections.emptyList());
             }
-        });
+            e.setCompletions(firstArguments);
+        } else if (args.length > 1 && commandMap.containsKey(args[0])) {
+            e.setCompletions(commandMap.get(args[0]).suggest(sender,
+                    Arrays.copyOfRange(args, 1, args.length)));
+        } else {
+            e.setCompletions(Collections.emptyList());
+        }
     }
 
 }
