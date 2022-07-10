@@ -39,9 +39,11 @@ abstract class PerPlayerGUI extends PageableGUI {
     }
 
     public void open(int index) {
-        openedPage = index;
-        TaskUtil.sync(() -> this.getInventoryAtIndex(index)
-                .ifPresent(player::openInventory));
+        TaskUtil.sync(() -> {
+            player.closeInventory();
+            openedPage = index;
+            this.getInventoryAtIndex(index).ifPresent(player::openInventory);
+        });
     }
 
     public void setClosed() {
