@@ -92,7 +92,7 @@ messages:
     reloaded: "Plugin has been reloaded."
     orders-limit-reached: "You can't create more orders. You've reached your limit which is equal to {}."
     no-item-in-hand: "You don't have any item in your hand."
-    amount-not-correct: "The amount you've entered is wrong. It must be a number that is bigger than 0 and smaller than {}."
+    amount-not-correct: "The amount you've entered is wrong. It must be a number that is bigger than 0 and smaller or the same than {}."
     payment-not-correct: "The payment you've entered is wrong. It must be a number that is bigger than {} and smaller than {}."
     not-enough-money: "You don't have enough money to pay for this order."
     blacklisted-item: "Item you are trying to add is restricted and cannot be added as an order."

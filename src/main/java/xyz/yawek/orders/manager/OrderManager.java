@@ -83,7 +83,7 @@ public class OrderManager {
         } catch (NumberFormatException e) {
             return false;
         }
-        return amount > 0 && amount < maxStackSize * 7;
+        return amount > 0 && amount <= maxStackSize * 7;
     }
 
     public boolean isPaymentCorrect(String paymentString) {
