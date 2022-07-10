@@ -19,6 +19,7 @@
 package xyz.yawek.orders.gui;
 
 import org.bukkit.entity.Player;
+import xyz.yawek.orders.util.TaskUtil;
 
 abstract class PerPlayerGUI extends PageableGUI {
 
@@ -39,8 +40,8 @@ abstract class PerPlayerGUI extends PageableGUI {
 
     public void open(int index) {
         openedPage = index;
-        this.getInventoryAtIndex(index)
-                .ifPresent(player::openInventory);
+        TaskUtil.sync(() -> this.getInventoryAtIndex(index)
+                .ifPresent(player::openInventory));
     }
 
     public void setClosed() {

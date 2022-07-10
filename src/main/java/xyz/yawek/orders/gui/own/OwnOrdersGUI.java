@@ -196,8 +196,8 @@ public final class OwnOrdersGUI extends ClickableGUI {
 
     @Override
     public boolean runActionAttempt(int slot, boolean withShiftPressed,
-                                    Inventory inventory) {
-        if (super.runActionAttempt(slot, withShiftPressed, inventory)) {
+                                    Inventory inventory, boolean async) {
+        if (super.runActionAttempt(slot, withShiftPressed, inventory, async)) {
             loadGUIIfOpened();
             return true;
         }

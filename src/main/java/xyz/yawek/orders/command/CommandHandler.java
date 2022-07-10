@@ -60,7 +60,7 @@ public class CommandHandler implements CommandExecutor, Listener {
                 sender.sendMessage(plugin.getPluginConfig().notFromConsole());
                 return true;
             }
-            plugin.getOrdersGUIManager().openGUI(player);
+            TaskUtil.async(() -> plugin.getOrdersGUIManager().openGUI(player));
             return true;
         }
         commandMap.get(args[0]).execute(sender,

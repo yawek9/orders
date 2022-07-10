@@ -56,7 +56,7 @@ public abstract class ClickableGUIManager implements Listener, EventExecutor {
                 EventPriority.NORMAL, this, plugin);
 
         if (refresh) {
-            TaskUtil.loopSync(0, 10,
+            TaskUtil.loopAsync(0, 10,
                     () -> guis.forEach(ClickableGUI::loadGUIIfOpened));
         }
     }
@@ -89,7 +89,7 @@ public abstract class ClickableGUIManager implements Listener, EventExecutor {
 
         ClickableGUI gui = guiOptional.get();
         if (gui.shouldCancelClick(e.getSlot())) e.setCancelled(true);
-        gui.runActionAttempt(e.getSlot(), e.isShiftClick(), inv);
+        gui.runActionAttempt(e.getSlot(), e.isShiftClick(), inv, true);
     }
 
     protected void onInventoryClose(InventoryCloseEvent e) {

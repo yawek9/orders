@@ -80,7 +80,7 @@ public abstract class ClickableGUI extends PerPlayerGUI {
     }
 
     public boolean runActionAttempt(int slot, boolean withShiftPressed,
-                                    Inventory inventory) {
+                                    Inventory inventory, boolean async) {
         if (clickedYet) return false;
         Optional<Integer> pageIndexOptional = this.getIndexIfExists(inventory);
         if (pageIndexOptional.isEmpty()) return false;
@@ -93,8 +93,12 @@ public abstract class ClickableGUI extends PerPlayerGUI {
                 .findFirst()
                 .ifPresent(clickAction -> {
                     setClickedYet(true);
+                    if (async) {
+                        TaskUtil.async(clickAction::runAction);
+                    } else {
+                        TaskUtil.sync(clickAction::runAction);
+                    }
                     TaskUtil.syncAfter(ticksBetweenClick, () -> setClickedYet(false));
-                    clickAction.runAction();
                 });
         return true;
     }
